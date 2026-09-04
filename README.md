@@ -107,4 +107,4 @@ git commit -m "docs: typo in readme [no-CI]"   # CI will be skipped
 
 ## License
 
-[Apache License 2.0](./LICENSE) © freshl contributors
+[Apache License 2.0](./LICENSE) © 2026 Micusion

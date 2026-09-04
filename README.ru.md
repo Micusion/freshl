@@ -107,4 +107,4 @@ git commit -m "docs: опечатка в ридми [no-CI]"   # CI будет �
 
 ## Лицензия
 
-[Apache License 2.0](./LICENSE) © участники freshl
+[Apache License 2.0](./LICENSE) © 2026 Micusion
