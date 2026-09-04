@@ -1,0 +1,31 @@
+{
+  "name": "freshl",
+  "version": "0.1.0",
+  "description": "Client-side cache with smart invalidation: policies, human-readable tags, dependency cascades, events and subscribers. Zero dependencies.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "main": "./dist/freshl.umd.cjs",
+  "module": "./src/freshl.js",
+  "browser": "./dist/freshl.umd.js",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./src/freshl.js",
+      "require": "./dist/freshl.umd.cjs",
+      "types": "./index.d.ts"
+    },
+    "./dist/freshl.umd.js": "./dist/freshl.umd.js",
+    "./dist/freshl.esm.js": "./dist/freshl.esm.js"
+  },
+  "files": ["src", "dist", "index.d.ts", "docs", "README.md", "README.ru.md", "LICENSE"],
+  "scripts": {
+    "build": "node build.mjs",
+    "test": "node --test 'test/**/*.mjs'",
+    "demo": "node demo/server.mjs"
+  },
+  "keywords": ["cache", "client", "invalidation", "swr", "stale-while-revalidate", "tags", "offline"],
+  "repository": {
+    "type": "git",
+    "url": ""
+  }
+}

@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>freshl demo</title>
+</head>
+<body>
+<h1>freshl demo</h1>
+<p>Server ships heavy datasets (~230 KB JSON each). All metrics come from <code>cache.stats()</code>.</p>
+
+<h2>Stats (cache.stats())</h2>
+<ul>
+  <li>speedup: <b id="s-speedup">—</b></li>
+  <li>hit rate: <b id="s-hitrate">—</b></li>
+  <li>cache hits: <b id="s-saved">0</b></li>
+  <li>avg hit, ms: <b id="s-hit">—</b></li>
+  <li>avg miss, ms: <b id="s-miss">—</b></li>
+  <li>fetcher calls: <b id="s-network">0</b></li>
+  <li>invalidations / keys: <b id="s-invalidations">0 / 0</b></li>
+  <li>downloaded, MB: <b id="s-payload">0</b></li>
+</ul>
+
+<h2>Scenarios</h2>
+<p>
+  <button id="b-load">Load all (6 datasets)</button>
+  <button id="b-reread">Re-read all</button>
+  <button id="b-mutate">Server updates alpha &amp; beta</button>
+  <button id="b-invalidate-tags">Invalidate tag "datasets"</button>
+  <button id="b-stress">Stress: 50 parallel reads</button>
+</p>
+
+<h2>Cache keys</h2>
+<table border="1">
+  <thead><tr><th>key</th><th>tags</th><th>age</th><th>state</th><th>hits</th><th>version</th></tr></thead>
+  <tbody id="rows"></tbody>
+</table>
+
+<h2>Log</h2>
+<pre id="log"></pre>
+
+<script src="/freshl.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

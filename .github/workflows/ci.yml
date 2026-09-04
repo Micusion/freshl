@@ -1,0 +1,90 @@
+name: CI
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # Decides whether the rest of the pipeline should run.
+  # Skip markers (case-insensitive): [no-CI], [no ci], [skip-CI], [ci-skip].
+  # Checked in the push commit message or the pull request title.
+  gate:
+    runs-on: ubuntu-latest
+    outputs:
+      should_run: ${{ steps.skip.outputs.should_run }}
+    steps:
+      - name: Check skip markers
+        id: skip
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            MSG="${{ github.event.pull_request.title }}"
+          else
+            MSG="${{ github.event.head_commit.message }}"
+          fi
+          echo "commit/pr message: $MSG"
+          if printf '%s' "$MSG" | grep -qiE '\[(no[ -]?ci|skip[ -]?ci|ci[ -]?skip)\]'; then
+            echo "should_run=false" >> "$GITHUB_OUTPUT"
+            echo 'skip marker found — pipeline will be skipped'
+          else
+            echo "should_run=true" >> "$GITHUB_OUTPUT"
+          fi
+
+  test:
+    name: test (node ${{ matrix.node }})
+    needs: gate
+    if: needs.gate.outputs.should_run == 'true'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [20, 22, 24]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Syntax check
+        run: node --check src/freshl.js
+
+      - name: Tests
+        run: npm test
+
+      - name: Build
+        run: npm run build
+
+      # dist/ is committed — fail if it drifted from src/freshl.js
+      # (someone edited src but forgot to rebuild)
+      - name: dist is up to date
+        run: |
+          node build.mjs
+          git diff --exit-code -- dist/ || {
+            echo '::error::dist/ is out of date — run "npm run build" and commit the result'
+            exit 1
+          }
+
+      # the UMD bundle must actually load and work
+      - name: Smoke test bundles
+        run: |
+          node -e "
+            const F = require('./dist/freshl.umd.cjs');
+            const c = F.createFreshl();
+            c.set('k', 1, { tags: ['t'] });
+            if (c.get('k') !== 1) throw new Error('umd.cjs broken');
+            if (c.invalidate({ tags: ['t'] }).length !== 1) throw new Error('invalidation broken');
+            console.log('umd.cjs ok');
+          "
+          node --input-type=module -e "
+            import { createFreshl } from './dist/freshl.esm.js';
+            const c = createFreshl();
+            c.set('k', 1, { tags: ['t'] });
+            if (c.get('k') !== 1) throw new Error('esm broken');
+            console.log('esm ok');
+          "
