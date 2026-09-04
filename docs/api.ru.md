@@ -17,7 +17,7 @@ English version: [api.md](./api.md)
 ## Фабрика и опции
 
 ```js
-import { createFreshl } from 'freshl';
+import { createFreshl } from '@micusion/freshl';
 const cache = createFreshl(options);
 ```
 

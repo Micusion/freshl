@@ -1,5 +1,6 @@
 # freshl
 
+[![npm](https://img.shields.io/npm/v/@micusion/freshl.svg)](https://www.npmjs.com/package/@micusion/freshl)
 [![License: Apache 2.0](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](./LICENSE)
 [![Tests](https://img.shields.io/badge/tests-27%2F27-brightgreen.svg)](#разработка)
 [![Dependencies](https://img.shields.io/badge/dependencies-0-success.svg)](./package.json)
@@ -19,7 +20,7 @@ freshl закрывает три сложных вопроса клиентск�
    или глобальный поток инвалидаций.
 
 ```js
-import { createFreshl } from 'freshl';
+import { createFreshl } from '@micusion/freshl';
 
 const cache = createFreshl({
   defaultPolicy: { ttl: 60_000, swr: 300_000 }, // свежий 1 мин, потом SWR 5 мин
@@ -68,7 +69,7 @@ cache.on('invalidate', ({ keys }) => keys.forEach(refetch));
 ## Установка
 
 ```bash
-npm install freshl   # или просто скопируйте src/freshl.js
+npm install @micusion/freshl   # или просто скопируйте src/freshl.js
 ```
 
 ```html

@@ -1,5 +1,6 @@
 # freshl
 
+[![npm](https://img.shields.io/npm/v/@micusion/freshl.svg)](https://www.npmjs.com/package/@micusion/freshl)
 [![License: Apache 2.0](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](./LICENSE)
 [![Tests](https://img.shields.io/badge/tests-27%2F27-brightgreen.svg)](#development)
 [![Dependencies](https://img.shields.io/badge/dependencies-0-success.svg)](./package.json)
@@ -19,7 +20,7 @@ freshl answers the three hard questions of client-side caching:
    or the global invalidation stream.
 
 ```js
-import { createFreshl } from 'freshl';
+import { createFreshl } from '@micusion/freshl';
 
 const cache = createFreshl({
   defaultPolicy: { ttl: 60_000, swr: 300_000 }, // fresh 1 min, then SWR for 5 min
@@ -68,7 +69,7 @@ cache.on('invalidate', ({ keys }) => keys.forEach(refetch));
 ## Installation
 
 ```bash
-npm install freshl   # or just copy src/freshl.js
+npm install @micusion/freshl   # or just copy src/freshl.js
 ```
 
 ```html

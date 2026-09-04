@@ -17,7 +17,7 @@ API на русском: [api.ru.md](./api.ru.md)
 ## Factory and options
 
 ```js
-import { createFreshl } from 'freshl';
+import { createFreshl } from '@micusion/freshl';
 const cache = createFreshl(options);
 ```
 
