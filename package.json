@@ -24,8 +24,16 @@
     "demo": "node demo/server.mjs"
   },
   "keywords": ["cache", "client", "invalidation", "swr", "stale-while-revalidate", "tags", "offline"],
+  "author": "Micusion",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "git+ssh://git@github.com:Micusion/freshl.git"
+  },
+  "homepage": "https://github.com/Micusion/freshl#readme",
+  "bugs": {
+    "url": "https://github.com/Micusion/freshl/issues"
+  },
+  "engines": {
+    "node": ">=18"
   }
 }

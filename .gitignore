@@ -21,3 +21,4 @@ coverage/
 # local scratch
 /tmp/
 *.local
+*.tgz
